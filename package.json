@@ -1,0 +1,23 @@
+{
+  "name": "courses1",
+  "version": "1.2.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PikinerLiliya/courses.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PikinerLiliya/courses/issues"
+  },
+  "homepage": "https://github.com/PikinerLiliya/courses#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "lodash": "^4.17.5"
+  }
+}
