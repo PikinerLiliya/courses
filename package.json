@@ -16,7 +16,10 @@
     "url": "https://github.com/PikinerLiliya/courses/issues"
   },
   "homepage": "https://github.com/PikinerLiliya/courses#readme",
-  "dependencies": {},
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3"
+  },
   "devDependencies": {
     "lodash": "^4.17.5"
   }
