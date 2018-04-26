@@ -1,28 +1,56 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var app = express();
-var port = 3000;
+var port = 3030;
 
-app.use(bodyParser.json());
+// var connection = mongoose.createConnection('mongodb://localhost:27017/testDb');
+mongoose.connect('mongodb://localhost:27017/testDb');
+var connection = mongoose.connection;
 
-app.use(function (req, res, next) {
-  req.reqDate = new Date();
+connection.once('connected', function () {
+  console.log('-----connected to DB------');
 
-  next();
+  var UsersSchema = new Schema({
+    name: String,
+    age: { type: Number, default: 25 }
+  }, { collection: 'users' });
+
+  var UserModel = mongoose.model('User', UsersSchema);
+
+  app.use(bodyParser.json());
+
+  app.use(function (req, res, next) {
+    req.reqDate = new Date();
+
+    next();
+  });
+
+  app.get('/users', function (req, res, next) {
+    UserModel.find({}, function (err, users) {
+      if (err){
+        return next(err);
+      }
+
+      res.status(200).send({ users: users })
+    });
+  });
+
+  app.post('/news', function (req, res, next) {
+    var body = req.body;
+
+    res.status(200).send({ body: body })
+  });
+
+  app.listen(port, function () {
+    console.log('server listening on port ' + port);
+  });
 });
 
-app.get('/news/:id', function (req, res, next) {
-  var id = req.params.id;
+connection.on('error', function (err) {
+  console.log('Error', err);
 
-  res.status(200).send({id: id, reqDate: req.reqDate})
+  process.exit(1);
 });
 
-app.post('/news', function (req, res, next) {
-  var body = req.body;
-
-  res.status(200).send({body: body})
-});
-
-app.listen(port, function () {
-  console.log('server listening on port ' + port);
-});
