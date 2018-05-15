@@ -19,8 +19,8 @@ connection.once('connected', function () {
     name: 'test',
     key: 'testKey',
     secret: '1q2w3e4r5tdhgkdfhgejflkejgkdlgh8j0jge4547hh',
-    resave: false,
-    rolling: true,
+    resave: false, // resave session even it was not changed, mostly not needed
+    rolling: true, // cookie will not be set on a response with an uninitialized session.
     saveUninitialized: false,
     store: new MongoStore({
       url: 'mongodb://localhost:27017/testDb',

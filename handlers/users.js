@@ -97,6 +97,10 @@ var UsersHandler = function () {
       res.status(201).send(users)
     })
 
+  };
+
+  this.logout = function (req, res, next) {
+    res.status(200).send({logout: 'success'});
   }
 };
 

@@ -13,6 +13,14 @@ var Session = function () {
 
     next(error)
   }
+
+  this.destroySession = function (req, res, next) {
+    if (req.session) {
+      req.session.destroy();
+    }
+
+    next();
+  }
 };
 
 module.exports = new Session();

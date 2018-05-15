@@ -1,4 +1,5 @@
 var PostsModel = require('../models/post');
+var ObjectId = require('mongoose').Schema.Types.ObjectId;
 
 var PostsHandler = function () {
   this.getAllPosts = function (req, res, next) {
@@ -13,7 +14,12 @@ var PostsHandler = function () {
 
   this.createPost = function (req, res, next) {
     var body = req.body;
-    var postModel = new PostsModel(body);
+    var userId = req.session.userId;
+    var postModel;
+
+    body.userId = userId;
+
+    postModel = new PostsModel(body);
 
     postModel.save(function (err, result) {
       if (err) {
@@ -36,9 +42,18 @@ var PostsHandler = function () {
         res.status(200).send({ data: result });
       })*/
 
+    var body = req.body;
+    var count = body.count || 20;
+    var page = body.page || 1;
+
+    var skip = count * (page - 1);
+    var limit = count;
+
     PostsModel.aggregate([{
       $match: {
-        title: 'Tets'
+        title: 'Tets',
+        _id: ObjectId("sdhajhak"),
+        date: new Date()
       }
     }, {
       $project: {
@@ -54,9 +69,32 @@ var PostsHandler = function () {
       }
     }, {
       $project: {
+        year: {$year: '$date'},
         title: 1,
         userId: { $arrayElemAt: ['$userId', 0] }
       }
+    }, {
+      $sort: {
+        title: -1
+      }
+    }, {
+      $match: {
+        'userId.name': 'Ivan'
+      }
+    }, /*{
+      $group: {
+        _id: '$title',
+        count: {$sum: 1}
+      }
+    },*/ {
+      $group: {
+        _id: null,
+        count: { $sum: 1 }
+      }
+    }, {
+      $skip: skip
+    }, {
+      $limit: limit
     }], function (err, result) {
       if (err) {
         return next(err);
@@ -64,6 +102,10 @@ var PostsHandler = function () {
 
       res.status(200).send({ data: result });
     })
+  };
+
+  this.upload = function (req, res, next) {
+    res.status(200).send({ data: 'uploaded' });
   }
 };
 
