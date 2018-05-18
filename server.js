@@ -15,6 +15,8 @@ connection.once('connected', function () {
 
   app.use(bodyParser.json());
 
+  app.use(express.static('src'));
+
   app.use(expressSession({ // почитайте і запишіть собі на що ці параетри впливають
     name: 'test',
     key: 'testKey',
