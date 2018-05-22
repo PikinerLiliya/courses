@@ -12,9 +12,9 @@ module.exports = function (app) {
   app.use('/users', usersRouter);
   app.use('/posts', postsRouter);
 
-  app.get('/', function (req, res, next) {
+  /*app.get('/', function (req, res, next) {
     res.sendfile('index.html');
-  });
+  });*/
 
   app.use(function (err, req, res, next) {
     var status = err.status || 500;

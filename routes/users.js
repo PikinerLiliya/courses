@@ -6,7 +6,7 @@ var sessionHelper = require('../helpers/session');
 var checkAuthentication = sessionHelper.checkAuthentication;
 var destroySession = sessionHelper.destroySession;
 
-router.get('/', checkAuthentication, usersHandler.getAllUsers);
+router.get('/', /*checkAuthentication,*/ usersHandler.getAllUsers);
 router.post('/', usersHandler.createUser);
 router.post('/signUp', usersHandler.signUp);
 router.post('/signIn', usersHandler.signIn);
