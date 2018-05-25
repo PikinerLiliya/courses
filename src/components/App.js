@@ -87,7 +87,7 @@ class App extends Component {
   setClicked(e) {
     const { onButtonClick } = this.props;
 
-    onButtonClick(e);
+    // onButtonClick(e);
 
     this.setState({
       wasClicked: true,
@@ -107,7 +107,7 @@ class App extends Component {
   render() {
     const { buttonText, wasClicked, items } = this.state;
 
-    console.log('render');
+    console.log(this.props);
 
     return (
       <Fragment>

@@ -2,7 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
-var port = 3030;
+var port = 3031;
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 
