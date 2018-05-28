@@ -1,18 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 import './index.css';
 import Root from './components/Root';
-import SignUp from './components/SignUp';
 import registerServiceWorker from './registerServiceWorker';
-
-import { BrowserRouter } from 'react-router-dom'
-
-const clickButton = function (e) {
-  console.log(e.target);
-};
+import history from './history'
+import store from './redux/store'
+import { Router } from 'react-router'
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Root />
-  </BrowserRouter>, document.getElementById('root'));
+  <Provider store={store}>
+    <Router history={history}>
+      <Root/>
+    </Router>
+  </Provider>, document.getElementById('root'));
 registerServiceWorker();

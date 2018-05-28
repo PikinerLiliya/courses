@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import App from './App';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
 import { Route, Switch } from 'react-router-dom';
 
+import { changeLogin } from '../actions/app'
+
 class Root extends Component {
-  state = {
-    loggendIn: false
-  };
 
   setLogin = (history) => {
-    this.setState({
-      loggendIn: true
-    });
+    const { changeLogin } = this.props;
+
+    changeLogin(true);
 
     history.replace('/')
   };
 
   render() {
-    const { loggendIn } = this.state;
+    const { isLoggedIn } = this.props;
 
     return (
       <Switch>
-        {loggendIn && <Route path="/" component={App} />}
+        {isLoggedIn && <Route path="/" component={App} />}
         <Route exact path="/signUp" render={({ location, history }) => {
           console.log(location);
           return (<SignUp setLogin={() => {
@@ -38,4 +39,16 @@ class Root extends Component {
   }
 }
 
-export default Root;
+function mapStoreToProps(store) {
+  return {
+    isLoggedIn: store.app.isLoggedIn
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    changeLogin
+  }, dispatch)
+}
+
+export default connect(mapStoreToProps, mapDispatchToProps)(Root);

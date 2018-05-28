@@ -1,5 +1,9 @@
 import React, { Component, Fragment, PureComponent } from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 import Button from './Button';
+
+import { getUsers } from '../actions/app'
 
 class App extends Component {
   constructor(props) {
@@ -27,40 +31,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    const { getUsers } = this.props;
     console.log('componentDidMount');
 
-    fetch('http://localhost:3030/users', {
-      method: 'GET',
-      // mode: 'no-cors',
-      credentials: 'same-origin',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Token': 'sas'
-      },
-    })
-      .then((resp) => {
-        if (resp.ok) {
-          return resp;
-        }
-
-        return resp.json().then((error) => {
-          throw error;
-        });
-      })
-      .then((resp) => {
-        return resp.json();
-      })
-      .then((resp) => {
-        console.log(resp);
-
-        this.setState({
-          items: resp.data
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    getUsers();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -105,7 +79,9 @@ class App extends Component {
   };
 
   render() {
-    const { buttonText, wasClicked, items } = this.state;
+    const { buttonText, wasClicked } = this.state;
+
+    const { users } = this.props;
 
     console.log(this.props);
 
@@ -129,11 +105,23 @@ class App extends Component {
           className={!wasClicked ? 'red-text' : 'blue-text'}
         />
         <ul className="list">
-          {items.map(this.renderLi)}
+          {users.map(this.renderLi)}
         </ul>
       </Fragment>
     );
   }
 }
 
-export default App;
+function mapStoreToProps(store) {
+  return {
+    users: store.users.items
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    getUsers,
+  }, dispatch)
+}
+
+export default connect(mapStoreToProps, mapDispatchToProps)(App);
