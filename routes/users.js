@@ -12,5 +12,6 @@ router.post('/signUp', usersHandler.signUp);
 router.post('/signIn', usersHandler.signIn);
 router.post('/logout', destroySession, usersHandler.logout);
 router.patch('/:id', checkAuthentication, usersHandler.updateUser);
+router.delete('/:id', usersHandler.deleteUser);
 
 module.exports = router;

@@ -3,6 +3,11 @@ import Button from './Button';
 import Input from './Input';
 import { NavLink } from 'react-router-dom'
 
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { signIn } from '../actions/app'
+
 class SignIn extends Component {
   state = {
     email: '',
@@ -10,13 +15,9 @@ class SignIn extends Component {
   };
   signIn = () => {
     const { email, pass } = this.state;
-    const { setLogin } = this.props;
+    const { signIn } = this.props;
 
-    // тут має бути запит на бекенд і в разі успіху - викл метод
-
-    setLogin();
-
-    console.log(email, pass);
+    signIn({ email, pass });
   };
 
   onInputChange = (value, key) => {
@@ -55,4 +56,10 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({
+    signIn
+  }, dispatch)
+}
+
+export default connect(null, mapDispatchToProps)(SignIn);

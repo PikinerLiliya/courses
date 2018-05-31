@@ -34,9 +34,21 @@ var UsersHandler = function () {
         return next(err);
       }
 
-      res.status(201).send({ updated: result });
+      res.status(200).send({ updated: result });
     })
-  }
+  };
+
+  this.deleteUser = function (req, res, next) {
+    var id = req.params.id;
+
+    UsersModel.findByIdAndRemove(id, function (err, result) {
+      if (err) {
+        return next(err);
+      }
+
+      res.status(200).send({ updated: result });
+    })
+  };
 
   this.signUp = function (req, res, next) {
     var body = req.body;
