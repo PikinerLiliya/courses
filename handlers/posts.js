@@ -26,7 +26,7 @@ var PostsHandler = function () {
         return next(err);
       }
 
-      res.status(201).send(result);
+      res.status(201).send({ data: result });
     })
   };
 
@@ -69,7 +69,7 @@ var PostsHandler = function () {
       }
     }, {
       $project: {
-        year: {$year: '$date'},
+        year: { $year: '$date' },
         title: 1,
         userId: { $arrayElemAt: ['$userId', 0] }
       }

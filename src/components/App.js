@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { getUsers, deleteUser } from '../actions/app'
+import { Route, Switch } from 'react-router-dom';
+
+import NavBar from './NavBar';
+import Posts from './Posts';
+import AddPosts from './AddPosts';
 
 class App extends Component {
   componentDidMount() {
@@ -32,9 +37,16 @@ class App extends Component {
     const { users } = this.props;
 
     return (
-      <ul className="list">
-        {users.map(this.renderLi)}
-      </ul>
+      <Fragment>
+        <NavBar/>
+        <Switch>
+          <Route path="/posts" component={Posts}/>
+          <Route path="/addPost" component={AddPosts}/>
+        </Switch>
+        {/*<ul className="list">
+          {users.map(this.renderLi)}
+        </ul>*/}
+      </Fragment>
     );
   }
 }

@@ -1,8 +1,7 @@
-import { CHANGE_LOGIN, SIGNUP_ERROR } from '../constants/actionTypes'
+import { GET_POSTS, ADD_POST } from '../constants/actionTypes'
 
 const defaultStore = {
-  isLoggedIn: true,
-  errors: {}
+  items: []
 };
 
 export default (state = defaultStore, action) => {
@@ -12,16 +11,16 @@ export default (state = defaultStore, action) => {
   } = action;
 
   switch (type) {
-    case CHANGE_LOGIN:
+    case GET_POSTS:
       return {
         ...state,
-        isLoggedIn: payload.isLoggedIn
+        items: [...payload]
       };
 
-    case SIGNUP_ERROR:
+    case ADD_POST:
       return {
         ...state,
-        errors: { ...payload }
+        items: [...state.items, ...[payload]] // add new post to other
       };
 
     default:

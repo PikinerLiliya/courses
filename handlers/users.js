@@ -12,6 +12,21 @@ var UsersHandler = function () {
     })
   };
 
+  this.getCurrentUser = function (req, res, next) {
+    var userId = req.session.userId;
+    var type = req.query.type;
+
+    console.log(type);
+
+    UsersModel.findById(userId, function (err, result) {
+      if (err) {
+        return next(err);
+      }
+
+      res.status(200).send({ user: result });
+    })
+  };
+
   this.createUser = function (req, res, next) {
     var body = req.body;
     var userModel = new UsersModel(body);
@@ -69,7 +84,9 @@ var UsersHandler = function () {
       }
 
       if (count) {
-        err.message = 'This email is already used';
+        err.message = {
+          email: 'This email is already used'
+        };
         return next(err)
       }
 
@@ -112,7 +129,7 @@ var UsersHandler = function () {
   };
 
   this.logout = function (req, res, next) {
-    res.status(200).send({logout: 'success'});
+    res.status(200).send({ logout: 'success' });
   }
 };
 

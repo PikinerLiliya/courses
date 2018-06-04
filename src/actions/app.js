@@ -1,13 +1,16 @@
 import {
   CHANGE_LOGIN,
   SET_USERS,
-  DELETE_USERS
+  DELETE_USERS,
+  SIGNUP_ERROR
 } from '../constants/actionTypes'
 
 export const changeLogin = (isLoggedIn) => {
   return {
     type: CHANGE_LOGIN,
-    payload: isLoggedIn
+    payload: {
+      isLoggedIn: isLoggedIn
+    }
   }
 };
 
@@ -111,7 +114,12 @@ export const signUp = ({ email, pass }, history) => {
         return history.push('/signIn')
       })
       .catch((err) => {
-        console.log(err);
+        const errorOb = err.message;
+
+        dispatch({
+          type: SIGNUP_ERROR,
+          payload: errorOb
+        })
       })
   }
 };
@@ -145,11 +153,50 @@ export const signIn = ({ email, pass }) => {
       .then((resp) => {
         return dispatch({
           type: CHANGE_LOGIN,
-          payload: true
+          payload: {
+            isLoggedIn: true
+          }
         })
       })
       .catch((err) => {
         console.log(err);
+      })
+  }
+};
+
+export const checkSession = (history) => {
+  return (dispatch) => {
+    fetch('http://localhost:3033/users/checkAuthentication?type=text', {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          return resp;
+        }
+
+        return resp.json().then((error) => {
+          throw error;
+        });
+      })
+      .then((resp) => {
+        return resp.json();
+      })
+      .then((resp) => {
+        return dispatch({
+          type: CHANGE_LOGIN,
+          payload: {
+            user: resp.user,
+            isLoggedIn: true
+          }
+        })
+      })
+      .catch((err) => {
+        return history.push('/signIn')
       })
   }
 };

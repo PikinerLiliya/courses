@@ -7,16 +7,22 @@ import SignIn from './SignIn';
 import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router'
 
-import { changeLogin } from '../actions/app'
+import { checkSession } from '../actions/app'
 
 class Root extends Component {
   componentDidMount() {
-    const { isLoggedIn, history } = this.props;
+    const { checkSession, history } = this.props;
 
-    if (!isLoggedIn) {
-      history.push('/signIn')
-    }
+    // checkSession(history);
   }
+
+  /* componentWillReceiveProps(nextProps) {
+     const { isLoggedIn, history } = nextProps;
+
+     if (!isLoggedIn) {
+       history.push('/signIn')
+     }
+   }*/
 
   render() {
     const { isLoggedIn } = this.props;
@@ -39,7 +45,7 @@ function mapStoreToProps(store) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    changeLogin
+    checkSession
   }, dispatch)
 }
 
