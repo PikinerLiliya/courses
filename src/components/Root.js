@@ -13,7 +13,7 @@ class Root extends Component {
   componentDidMount() {
     const { checkSession, history } = this.props;
 
-    // checkSession(history);
+    checkSession(history);
   }
 
   /* componentWillReceiveProps(nextProps) {

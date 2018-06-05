@@ -16,7 +16,7 @@ export const changeLogin = (isLoggedIn) => {
 
 export const deleteUser = (id) => {
   return (dispatch) => {
-    fetch(`http://localhost:3033/users/${id}`, {
+    fetch(`/users/${id}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: {
@@ -50,7 +50,7 @@ export const deleteUser = (id) => {
 
 export const getUsers = () => {
   return (dispatch) => {
-    fetch('http://localhost:3033/users', {
+    fetch('/users', {
       method: 'GET',
       // mode: 'no-cors',
       credentials: 'same-origin',
@@ -86,7 +86,7 @@ export const getUsers = () => {
 
 export const signUp = ({ email, pass }, history) => {
   return (dispatch) => {
-    fetch('http://localhost:3033/users/signUp', {
+    fetch('/users/signUp', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
@@ -126,7 +126,7 @@ export const signUp = ({ email, pass }, history) => {
 
 export const signIn = ({ email, pass }) => {
   return (dispatch) => {
-    fetch('http://localhost:3033/users/signIn', {
+    fetch('/users/signIn', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
@@ -166,7 +166,7 @@ export const signIn = ({ email, pass }) => {
 
 export const checkSession = (history) => {
   return (dispatch) => {
-    fetch('http://localhost:3033/users/checkAuthentication?type=text', {
+    fetch('/users/checkAuthentication?type=text', {
       method: 'GET',
       credentials: 'same-origin',
       headers: {

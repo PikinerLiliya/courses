@@ -5,7 +5,7 @@ import {
 
 export const getPosts = () => {
   return (dispatch) => {
-    fetch('http://localhost:3033/posts', {
+    fetch('/posts', {
       method: 'GET',
       credentials: 'same-origin',
       headers: {
@@ -39,7 +39,7 @@ export const getPosts = () => {
 
 export const addPost = (data) => {
   return (dispatch) => {
-    fetch('http://localhost:3033/posts', {
+    fetch('/posts', {
       method: 'POST',
       credentials: 'same-origin',
       headers: {
