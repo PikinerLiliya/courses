@@ -7,7 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import NavBar from './NavBar';
 import Posts from './Posts';
-import AddPosts from './AddPosts';
+import AddOrEditPosts from './AddOrEditPosts';
 
 class App extends Component {
   componentDidMount() {
@@ -38,10 +38,11 @@ class App extends Component {
 
     return (
       <Fragment>
-        <NavBar/>
+        <NavBar />
         <Switch>
-          <Route path="/posts" component={Posts}/>
-          <Route path="/addPost" component={AddPosts}/>
+          <Route exact path="/" component={Posts} />
+          <Route exact path="/addPost" component={AddOrEditPosts} />
+          <Route path="/posts/:id" component={AddOrEditPosts} />
         </Switch>
         {/*<ul className="list">
           {users.map(this.renderLi)}

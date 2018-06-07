@@ -38,9 +38,13 @@ export const getPosts = () => {
 };
 
 export const addPost = (data) => {
+  const { _id } = data;
+  const url = _id ? `/posts/${_id}` : '/posts';
+  const method = _id ? 'PATCH' : 'POST';
+
   return (dispatch) => {
-    fetch('/posts', {
-      method: 'POST',
+    fetch(url, {
+      method,
       credentials: 'same-origin',
       headers: {
         Accept: 'application/json',

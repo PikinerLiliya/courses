@@ -12,9 +12,17 @@ class Posts extends Component {
     getPosts();
   }
 
+  redirectToPost = (id) => {
+    const { history } = this.props;
+
+    history.push(`/posts/${id}`);
+  };
+
   renderPost = (el, ind) => {
     return (
-      <li key={el._id}>{el.title}</li>
+      <li key={el._id} onClick={() => {
+        return this.redirectToPost(el._id)
+      }}>{el.title}</li>
     );
   };
 

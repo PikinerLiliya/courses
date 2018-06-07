@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { func, bool } from 'prop-types'
 import App from './App';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
@@ -16,14 +17,6 @@ class Root extends Component {
     checkSession(history);
   }
 
-  /* componentWillReceiveProps(nextProps) {
-     const { isLoggedIn, history } = nextProps;
-
-     if (!isLoggedIn) {
-       history.push('/signIn')
-     }
-   }*/
-
   render() {
     const { isLoggedIn } = this.props;
 
@@ -36,6 +29,15 @@ class Root extends Component {
     );
   }
 }
+
+Root.propTypes = {
+  isLoggedIn: bool,
+  checkSession: func.isRequired
+};
+
+Root.defaultProps = {
+  isLoggedIn: false,
+};
 
 function mapStoreToProps(store) {
   return {
